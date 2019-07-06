@@ -23,6 +23,8 @@ class ShoppingCart {
   deleteItem(itemId) {
     for (var id in this.items) {
       if (itemId == this.items[id].item._id) {
+        this.totalQty -= this.items[id].qty;
+        this.totalPrice -= this.items[id].price;
         delete this.items[id];
       }
     }
