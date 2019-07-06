@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const ProductService = require('../../services/productService');
 const ShoppingCart = require('../../models/shoppingCart');
+const Util = require('../../utils/helper');
 
 router.get('/', (req, res) => {
   res.send('Shopping Cart API');
@@ -14,7 +15,7 @@ router.get('/catalog', (req, res) => {
       const data = products.map((product) => (
         {
           name: product.name,
-          price: `$${product.price}`,
+          price: `$${Util.roundToTwo(product.price)}`,
           $link: `http://localhost:9000/api/addItem/${product._id}`,
         }
       ));
@@ -30,7 +31,7 @@ router.get('/catalog', (req, res) => {
   }
 });
 
-router.get('/viewCart', (req, res) => {
+router.get('/shoppingcart', (req, res) => {
   try {
     const oldCart = req.session.shoppingCart ? req.session.shoppingCart : { items: {}, totalQty: 0, totalPrice: 0 };
     const shoppingCart = new ShoppingCart(oldCart);
@@ -89,7 +90,7 @@ router.delete('/deleteItem/:id', (req, res) => {
   }
 });
 
-router.delete('/clearCart', (req, res) => {
+router.delete('/emptycart', (req, res) => {
   try {
     req.session.shoppingCart = {items: {}, totalQty: 0, totalPrice: 0};
     res.send({

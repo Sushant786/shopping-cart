@@ -1,32 +1,37 @@
 const mongoose = require('mongoose');
 
 const connectDB = () => {
-    try {
-        mongoose.connect('mongodb://localhost:27017/shopping-cart', { useNewUrlParser: true });
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    mongoose.connect('mongodb://localhost:27017/shopping-cart', { useNewUrlParser: true });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const disconnectDB = () => {
-    try {
-        mongoose.disconnect();
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    mongoose.disconnect();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const Schema = (schema) => {
-    return mongoose.Schema(schema);
+  return mongoose.Schema(schema);
 }
 
 const Model = (name, schema) => {
-    return mongoose.model(name, schema);
+  return mongoose.model(name, schema);
+}
+
+const connection = () => {
+  return mongoose.connection;
 }
 
 module.exports = {
-    connectDB,
-    disconnectDB,
-    Schema,
-    Model
+  connectDB,
+  disconnectDB,
+  Schema,
+  Model,
+  connection
 };

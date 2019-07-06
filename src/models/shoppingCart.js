@@ -1,3 +1,5 @@
+const Util = require('../utils/helper');
+
 class ShoppingCart {
   constructor(oldShoppingCart) {
     this.items = oldShoppingCart.items;
@@ -15,7 +17,7 @@ class ShoppingCart {
     savedItem.qty++;
     savedItem.price = savedItem.item.price * savedItem.qty;
     this.totalQty++
-    this.totalPrice += savedItem.item.price * savedItem.qty;
+    this.totalPrice += savedItem.item.price;
   }
 
   deleteItem(itemId) {
@@ -31,14 +33,14 @@ class ShoppingCart {
     for (var id in this.items) {
       const data = {
         item: this.items[id].item.name,
-        price: `$${this.items[id].item.price}`,
+        price: `$${Util.roundToTwo(this.items[id].item.price)}`,
         quantity: this.items[id].qty,
-        total: `$${this.items[id].price}`
+        total: `$${Util.roundToTwo(this.items[id].price)}`
       };
       cartItems.push(data);
     }
     return cartItems.length > 0
-      ? {items: cartItems, totalQty: this.totalQty, grandTotal: `$${this.totalPrice}`}
+      ? {items: cartItems, totalQty: this.totalQty, grandTotal: `$${Util.roundToTwo(this.totalPrice)}`}
       : cartItems;
   }
 }

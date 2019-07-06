@@ -5,15 +5,18 @@ const logger = require('morgan');
 const MongoClient = require('./services/mongoClient');
 const routes = require('./routes');
 const session = require('express-session');
+const MongoConnectStore = require('connect-mongo')(session);
 const HTTP_SERVER_PORT = 9000;
 
 MongoClient.connectDB();
 
 const app = express();
 app.use(session({
-  secret: 'key',
+  secret: 'mysecret',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  store: new MongoConnectStore({ mongooseConnection: MongoClient.connection() }),
+  cookie: { maxAge: 60 * 60 * 1000 }
 }));
 
 app.use(logger('dev'));
