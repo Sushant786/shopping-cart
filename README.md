@@ -2,7 +2,7 @@
 NodeJS Shopping Cart Exercise
 
 ## Version
-VR-BackendTest-v1.1
+v1.0
 
 ## Running the shopping-cart project locally:
 cd to src directory prior to following instructions listed below.
